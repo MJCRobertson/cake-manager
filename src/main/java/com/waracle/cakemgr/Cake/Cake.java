@@ -1,4 +1,4 @@
-package com.waracle.cakemgr;
+package com.waracle.cakemgr.Cake;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "CAKES", uniqueConstraints = {@UniqueConstraint(columnNames = "ID")})
-public class CakeEntity implements Serializable {
+public class Cake implements Serializable {
 
     private static final long serialVersionUID = -1798070786993154676L;
 
@@ -25,9 +25,9 @@ public class CakeEntity implements Serializable {
     @Column(name = "IMAGE", unique = false, nullable = false, length = 300)
     private String image;
 
-    CakeEntity() {}
+    Cake() {}
 
-    CakeEntity(String title, String desc, String image) {
+    Cake(String title, String desc, String image) {
 
         this.title = title;
         this.desc = desc;
@@ -75,9 +75,9 @@ public class CakeEntity implements Serializable {
 
         if (this == obj)
             return true;
-        if (!(obj instanceof CakeEntity))
+        if (!(obj instanceof Cake))
             return false;
-        CakeEntity cake = (CakeEntity) obj;
+        Cake cake = (Cake) obj;
         return Objects.equals(this.id, cake.id)
                 && Objects.equals(this.title, cake.title)
                 && Objects.equals(this.desc, cake.desc)
