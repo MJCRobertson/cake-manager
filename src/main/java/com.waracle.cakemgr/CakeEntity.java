@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@org.hibernate.annotations.Entity(dynamicUpdate = true)
 @Table(name = "Employee", uniqueConstraints = {@UniqueConstraint(columnNames = "ID"), @UniqueConstraint(columnNames = "EMAIL")})
 public class CakeEntity implements Serializable {
 
