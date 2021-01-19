@@ -1,11 +1,12 @@
 package com.waracle.cakemgr;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Employee", uniqueConstraints = {@UniqueConstraint(columnNames = "ID"), @UniqueConstraint(columnNames = "EMAIL")})
+@Table(name = "CAKES", uniqueConstraints = {@UniqueConstraint(columnNames = "ID")})
 public class CakeEntity implements Serializable {
 
     private static final long serialVersionUID = -1798070786993154676L;
@@ -13,16 +14,37 @@ public class CakeEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
-    private Integer employeeId;
+    private Long id;
 
-    @Column(name = "EMAIL", unique = true, nullable = false, length = 100)
+    @Column(name = "TITLE", unique = false, nullable = false, length = 100)
     private String title;
 
-    @Column(name = "FIRST_NAME", unique = false, nullable = false, length = 100)
-    private String description;
+    @Column(name = "DESC", unique = false, nullable = false, length = 100)
+    private String desc;
 
-    @Column(name = "LAST_NAME", unique = false, nullable = false, length = 300)
+    @Column(name = "IMAGE", unique = false, nullable = false, length = 300)
     private String image;
+
+    CakeEntity() {}
+
+    CakeEntity(String title, String desc, String image) {
+
+        this.title = title;
+        this.desc = desc;
+        this.image = image;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -32,12 +54,12 @@ public class CakeEntity implements Serializable {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public String getImage() {
@@ -48,4 +70,30 @@ public class CakeEntity implements Serializable {
         this.image = image;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+
+        if (this == obj)
+            return true;
+        if (!(obj instanceof CakeEntity))
+            return false;
+        CakeEntity cake = (CakeEntity) obj;
+        return Objects.equals(this.id, cake.id)
+                && Objects.equals(this.title, cake.title)
+                && Objects.equals(this.desc, cake.desc)
+                && Objects.equals(this.image, cake.image);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.id, this.title, this.desc, this.image);
+    }
+
+    @Override
+    public String toString() {
+        return "Cake{" + "id=" + this.id
+                + ", title='" + this.title + '\''
+                + ", description='" + this.desc + '\''
+                + ", image='" + this.title + '\'' + '}';
+    }
 }
