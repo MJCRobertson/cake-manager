@@ -1,9 +1,11 @@
 package com.waracle.cakemgr.Cake;
 
 import com.waracle.cakemgr.Messages.CakeNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +16,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+@RequestMapping("/")
 public class CakeController {
 
+    @Autowired
     private final CakeRepository repository;
 
+    @Autowired
     private final CakeModelAssembler assembler;
 
     CakeController(CakeRepository repository, CakeModelAssembler assembler) {
@@ -27,6 +32,7 @@ public class CakeController {
     }
 
     @GetMapping("/cakes")
+    @ResponseStatus(HttpStatus.OK)
     CollectionModel<EntityModel<Cake>> all() {
 
         List<EntityModel<Cake>> cakes = repository.findAll().stream()

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.com.waracle.cakemgr.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Cakes</title>
+    <link rel="stylesheet" href="../static/main.css">
+</head>
+<body>
+<div th:switch="${cakes}">
+    <h2 th:case="null">No cakes found.</h2>
+    <div th:case="*">
+        <h2>Cakes</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Image</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cake : ${cakes}">
+                <td th:text="${cake.title}"></td>
+                <td th:text="${cake.desc}"></td>
+                <td><img th:src="${cake.image}"/></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
