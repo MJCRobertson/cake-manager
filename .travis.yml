@@ -1,5 +1,7 @@
 language: java
 jdk:
   - openjdk11
+before_install:
+  - chmod +x mvnw
 script:
   - cd C:\Users\MJCRo\Development\WARACLE\techChallange\cake-manager\mvn clean install
