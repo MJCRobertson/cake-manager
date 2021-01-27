@@ -2,4 +2,4 @@ language: java
 jdk:
   - openjdk11
 script:
-  - ./maven clean install
+  - ./mvn clean install
