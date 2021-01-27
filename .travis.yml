@@ -2,4 +2,4 @@ language: java
 jdk:
   - openjdk11
 script:
-  - ./mvn clean install
+  - cd C:\Users\MJCRo\Development\WARACLE\techChallange\cake-manager\mvn clean install
