@@ -4,4 +4,4 @@ jdk:
 before_install:
   - chmod +x mvnw
 script:
-  - cd C:\Users\MJCRo\Development\WARACLE\techChallange\cake-manager\mvn clean install
+  - ./mvnw clean install
