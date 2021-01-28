@@ -1,5 +1,9 @@
 package com.waracle.cakemgr.Cake;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,54 +11,53 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Arrays;
-import java.util.List;
+import static org.junit.Assert.assertEquals;
+import org.springframework.web.context.WebApplicationContext;
+import java.io.IOException;
 
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(CakeController.class)
+@WebAppConfiguration
 public class CakeControllerTest {
 
     @Autowired
-    private MockMvc mvc;
+    private MockMvc mockMvc;
 
-    @MockBean
-    private CakeRepository cakeRepository;
+    @Autowired
+    WebApplicationContext webApplicationContext;
 
     @MockBean
     private CakeController cakeController;
 
-    @Test
-    public void givenCakes_whenGetCakes_thenReturns200() throws Exception {
+    protected void setUp() {
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
+    protected String mapToJson(Object obj) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(obj);
+    }
 
-        Cake cake = new Cake("Chocolate", "Full O Chocolate", "Image");
-
-        List<Cake> allCakes = Arrays.asList(cake);
-
-        given(cakeRepository.findAll()).willReturn(allCakes);
-
-        mvc.perform(get("/cakes")
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk());
-
+    protected <T> T mapFromJson(String json, Class<T> classToMapTo) throws JsonParseException, JsonMappingException, IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(json, classToMapTo);
     }
 
     @Test
-    public void givenCakes_whenPostCakes_thenReturns200() throws Exception {
+    public void testGetCakesRoute() throws Exception {
+        String uri = "/cakes";
 
-        Cake cake = new Cake("Chocolate", "Full O Chocolate", "Image");
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(uri)
+        .accept(MediaType.APPLICATION_JSON)).andReturn();
 
-        given(cakeRepository.findById(cake.getId())).willReturn(java.util.Optional.of(cake));
-
-        mvc.perform(get("/cakes/1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        int status = mvcResult.getResponse().getStatus();
+        assertEquals(200, status);
 
     }
-
 }
