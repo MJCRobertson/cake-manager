@@ -1,57 +1,76 @@
 Cake Manager Micro Service (fictitious)
 =======================================
 
-A summer intern started on this project but never managed to get it finished.
-The developer assured us that some of the above is complete, but at the moment accessing the /cakes endpoint
-returns a 404, so getting this working should be the first priority.
+Welcome to the cake manager API microservice!
 
-Requirements:
-* By accessing the root of the server (/) it should be possible to list the cakes currently in the system. This must be presented in an acceptable format for a human to read.
+This is a RESTfull web API used to get and collect info on cakes.
 
-* It must be possible for a human to add a new cake to the server.
+It is my attempt at demonstrating a totally sand alone back end service that can be consumed in a variety of ways
+and adheres to Richardson's maturity model for API'S.
 
-* By accessing an alternative endpoint (/cakes) with an appropriate client it must be possible to download a list of
-the cakes currently in the system as JSON data.
+Technology Used
+================
 
-* The /cakes endpoint must also allow new cakes to be created.
+-Spring Boot
+-Spring Data
+-Spring HATEOS
+-Thymeleaf
+-Hibernate
+-Docker
+-Travis CI
+-HSQL In-Memory Database
 
-Comments:
-* We feel like the software stack used by the original developer is quite outdated, it would be good to migrate the entire application to something more modern.
-* Would be good to change the application to implement proper client-server separation via REST API.
+Project Setup
+==============
+-Create a local folder on your machine to host the api
+-From the CMD prompt
+    - ~ Git init ~ - to initialize the folder as an empty Git Repo
+    - ~ Git Clone <InsertProjectLink> ~ - copy the Project into the repo
+    - ~ mvn clean install ~ - to install the needed dependencies
+    - ~ mvn spring-boot:run ~ - to start the application on localhost 8080
 
-Bonus points:
-* Tests
-* Authentication via OAuth2
-* Continuous Integration via any cloud CI system
-* Containerisation
+-Alternatively all of the above can be done from your chosen IDE
 
+API USAGE
+===========
+There are several ways to access and use the service.
 
-Original Project Info
-=====================
+You can use the following curl commands from a terminal.
+    - This command will return a JSON payload of all cakes in the system
+        ~ $ curl -v localhost:8080/cakes | json_pp
+    - This command will return a specified cake based on the id supplied to it
+        ~ $ curl -v localhost:8080/cakes/{id} | json_pp
+    - This command will send a POST request, creating a new cake in the DB
+        ~ $ curl -X POST localhost:8080/cakes -H 'Content-type:application/json' -d '{"title": "Insert your cake name", "desc": "Insert your cake description", "image": "Insert your cake image url"}'
+    - This command is the same as the previous, but the path has a cake id added and can update existing entries
+        ~ $ curl -X PUT localhost:8080/cakes/3 -H 'Content-type:application/json' -d '{"title": "Insert your cake name", "desc": "Insert your cake description", "image": "Insert your cake image url"}'
+    - This command will simply delete a cake by the id supplied
+        ~ $ curl -X DELETE localhost:8080/employees/3
 
-To run a server locally execute the following command:
+You can also use a web browser of your choice at access the following api endpoints
 
-`mvn jetty:run`
+    - This url path wil take you to the Thymeleaf homepage - http://www.localhost:8080/
+    - This url path wil return a JSON body of all cakes and their meta data - http://www.localhost:8080/cakes
+    - This url path wil take you to the specific cake specified by id - http://www.localhost:8080/cakes/{id}
 
-and access the following URL:
+Alternatively you can use a tool such as Postman to test out and browse the service.
 
-`http://localhost:8282/`
+Also if you would like to see an example of a Client side application consuming this service, then you can additionally
+visit https://github.com/MJCRobertson/cake-manager-angular-ui and following the Readme instructions to set up the Cake Manager Angular front end. This will let you see
+potential ways of consuming the service.
 
-Feel free to change how the project is run, but clear instructions must be given in README
-You can use any IDE you like, so long as the project can build and run with Maven or Gradle.
+Additional Info
+================
+This project is available on Docker at https://hub.docker.com/r/mjcrobertson/cake-manager
 
-The project loads some pre-defined data in to an in-memory database, which is acceptable for this exercise.  There is
-no need to create persistent storage.
+Additionally this project has been integrated with Travis for continuous integration and will run a build everytime a commit is made.
 
+Future Improvements
+====================
+- Increase Test Coverage - Had several issues relating to the testing of the endpoints and the data they return.
+- AuthO2 Integration - Would like to implement security on the service itself, the thymeleaf view, and then figure out how to add this to a front end
+  for a whole stack flow.
+- A few niggling tidy ups with naming, checking that the changes don't cause any cascading errors/bugs.
+- Add the docker image upload into the CI/CD pipeline with Travis
+- Add in another entity to make use of the Spring HATEOS features as currently they don't add very much functionality other than checking that box
 
-Submission
-==========
-
-Please provide your version of this project as a git repository (e.g. Github, BitBucket, etc).
-
-Alternatively, you can submit the project as a zip or gzip. Use Google Drive or some other file sharing service to
-share it with us.
-
-Please also keep a log of the changes you make as a text file and provide this to us with your submission.
-
-Good luck!
