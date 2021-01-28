@@ -68,8 +68,7 @@ Additionally this project has been integrated with Travis for continuous integra
 Future Improvements
 ====================
 - Increase Test Coverage - Had several issues relating to the testing of the endpoints and the data they return.
-- AuthO2 Integration - Would like to implement security on the service itself, the thymeleaf view, and then figure out how to add this to a front end
-  for a whole stack flow.
+- AuthO2 Integration - Would like to implement security on the service itself, the thymeleaf view, and then figure out how to add this to a front end for a whole stack flow.
 - A few niggling tidy ups with naming, checking that the changes don't cause any cascading errors/bugs.
 - Add the docker image upload into the CI/CD pipeline with Travis
 - Add in another entity to make use of the Spring HATEOS features as currently they don't add very much functionality other than checking that box
