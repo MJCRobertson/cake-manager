@@ -3,6 +3,5 @@ jdk:
   - openjdk11
 before_install:
   - chmod +x mvnw
-  - docker pull openjdk:11-jre-slim-sid
 script:
   - ./mvnw clean install
